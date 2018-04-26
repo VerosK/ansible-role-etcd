@@ -1,0 +1,44 @@
+etcd_packages: etcd
+etcd_repo: epel
+
+etcd_user: etcd
+etcd_binary: /usr/bin/etcd
+etcd_service_name: etcd
+
+# etcd peer name
+etcd_name: '{{ ansible_nodename }}'
+
+#
+etcd_data_dir: /var/lib/etcd/data
+etcd_wal_dir: /var/lib/etcd/wal
+
+#
+etcd_sysconfig_file: /etc/sysconfig/etcd
+etcd_backup_sysconfig: true
+
+#
+etcd_systemd_unit_file: /etc/systemd/system/{{ etcd_service_name }}.service
+etcd_backup_systemd_unit_file: false
+
+#
+etcd_address: "127.0.0.1"
+etcd_client_address: "{{ etcd_address }}"
+etcd_peer_address: "{{ etcd_address  }}"
+etcd_client_port: 2379
+etcd_peer_port: 2380
+etcd_peers_group: etcd
+etcd_url_scheme: http
+etcd_client_url_scheme: "{{ etcd_url_scheme }}"
+etcd_peer_url_scheme: "{{ etcd_url_scheme }}"
+
+etcd_initial_cluster_state: new
+etcd_initial_cluster_token: change-this-name
+
+etcd_initial_advertise_peer_urls: "{{ etcd_peer_url_scheme }}://{{ etcd_peer_address }}:{{ etcd_peer_port }}"
+etcd_listen_peer_urls:  "{{ etcd_peer_url_scheme }}://{{ etcd_peer_address }}:{{ etcd_peer_port }}"
+etcd_advertise_client_urls: "{{ etcd_client_url_scheme }}://{{ etcd_client_address }}:{{ etcd_client_port }}"
+etcd_listen_client_urls: "{{ etcd_client_url_scheme }}://{{ etcd_client_address }}:{{ etcd_client_port }}"
+
+
+# add your extra etcd options here
+etcd_extra_opts: ""

@@ -1,0 +1,42 @@
+- name: "Install etcd from RPM"
+  yum:
+    name: '{{ etcd_packages }}'
+    enablerepo: '{{ etcd_repo|default(omit) }}'
+    state: installed
+
+- name: "Create etcd datadir"
+  file:
+    path: '{{ etcd_data_dir }}'
+    state: directory
+    owner: '{{ etcd_user }}'
+
+- name: "Create etcd WAL dir"
+  file:
+    path: '{{ etcd_wal_dir }}'
+    state: directory
+    owner: '{{ etcd_user }}'
+
+- name: "Create etcd sysconfig"
+  template:
+    src: 'etcd.environment.j2'
+    dest: '{{ etcd_sysconfig_file }}'
+    backup: '{{ etcd_backup_sysconfig|default(True) }}'
+  notify: restart etcd
+
+- name: "Create etcd systemd unit"
+  template:
+    src: 'etcd.service.j2'
+    dest: '{{ etcd_systemd_unit_file }}'
+    backup: '{{ etcd_backup_systemd_unit_file|default(True) }}'
+  notify:
+    - systemd reload
+    - restart etcd
+
+- meta: flush_handlers
+
+- name: Start etcd
+  service:
+    name: '{{ etcd_service_name }}'
+    state: started
+    enabled: true
+

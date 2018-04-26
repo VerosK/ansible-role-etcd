@@ -1,0 +1,23 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=etcd Daemon
+After=network.target
+
+[Service]
+Type=notify
+User={{ etcd_user }}
+{##}
+
+EnvironmentFile={{ etcd_sysconfig_file }}
+ExecStart={{ etcd_cmd }} \
+    {{ etcd_extra_opts }}
+
+Restart=always
+RestartSec=10s
+LimitNOFILE=40000
+TimeoutStartSec=0
+
+
+[Install]
+WantedBy=multi-user.target
