@@ -32,6 +32,9 @@
     - systemd reload
     - restart etcd
 
+- include: setup-firewalld-rules.yml
+  when: etcd_with_firewalld_rules
+
 - meta: flush_handlers
 
 - name: Start etcd

@@ -1,0 +1,20 @@
+
+- name: Enable etcd peers
+  firewalld:
+    port: '{{ etcd_peer_port }}/tcp'
+    permanent: true
+    immediate: true
+    zone: '{{ etcd_firewalld_zone }}'
+    state: enabled
+  with_items: '{{ etcd_firewalld_peer_addresses }}'
+
+
+- name: Enable etcd clients
+  firewalld:
+    port: '{{ etcd_client_port }}/tcp'
+    source: '{{ item }}'
+    permanent: true
+    immediate: true
+    zone: '{{ etcd_firewalld_zone }}'
+    state: enabled
+  with_items: '{{ etcd_firewalld_client_addresses }}'

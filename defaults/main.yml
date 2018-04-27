@@ -42,3 +42,16 @@ etcd_listen_client_urls: "{{ etcd_client_url_scheme }}://{{ etcd_client_address 
 
 # add your extra etcd options here
 etcd_extra_opts: ""
+
+# Should we setup firewalld rules?
+etcd_with_firewalld_rules: false
+etcd_firewalld_zone: public
+
+# this IP addresses should be allowed
+etcd_firewalld_peer_addresses:
+    - 127.0.0.1
+
+# this IP addresses should be allowed for clients
+etcd_firewalld_client_addresses:
+    - 127.0.0.1
+
