@@ -13,9 +13,3 @@ ETCD_INITIAL_ADVERTISE_PEER_URLS={{ etcd_initial_advertise_peer_urls }}
 ETCD_ADVERTISE_CLIENT_URLS={{ etcd_advertise_client_urls }}
 # Reject reconfiguration requests that would cause quorum loss.
 ETCD_STRICT_RECONFIG_CHECK=true
-
-
-# -initial-cluster-token etcd-cluster-1
-# -initial-cluster left=http://192.168.49.41:2380,center=http://192.168.49.42:2380,right=http://192.168.49.43:2380
-# -initial-cluster-state new
-# -initial-advertise-peer-urls http://192.168.49.41:2380
